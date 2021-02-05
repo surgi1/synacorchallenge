@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="https://zeptojs.com/zepto.min.js"></script>
+    <title>Synacor Challenge</title>
+    <style type="text/css">
+        html, button, input {
+            font-family: 'Source Code Pro', monospace;
+            background-color: #0f0f23;
+        }
+        #root {
+            width: 600px;
+        }
+        input#command, #send {
+            margin-right:4px;
+            margin-top:0px;
+        }
+        .output {
+            margin:5px 10px 15px 10px;
+            padding:10px 20px 10px 20px;
+            background-color:#0f0f23;
+            border: 1px solid lightslategray;
+            border-radius:10px;
+            color: #cccccc;
+            font-size:14pt;
+        }
+        button, input {
+            font-size:14pt;
+            margin:4px;
+            border: 1px solid lightslategray;
+            background-color:#0f0f23;
+            color: #fff;
+            border-radius:4px;
+            padding-left:14px;
+            padding-right:14px;
+            padding-top:7px;
+            padding-bottom:7px;
+            cursor: pointer;
+        }
+        input {
+            margin-left:12px;
+            width:460px;
+            font-size:14px;
+        }
+        .wrapper {
+            width:600px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="root">
+        </div>
+        <input type="text" id="command"/>
+        <button id="send">Send</button>
+    </div>
+    <script src="input.js"></script>
+    <script src="Computer.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -65,7 +65,7 @@ const main = () => {
 // later, after reading some theory: https://en.wikipedia.org/wiki/Ackermann_function and more
 // there is a much more elegant implementation available:
 
-const loop = (n, r7) => {
+const f = (n, r7) => {
     let a = powMod(r7+1, n, 0x8000),
         b = (powMod(r7+1, n, r7*0x8000) || r7)-1;
     return ( a*((r7+1)*(r7+1)+r7) + b*(2*r7+1)/r7 ) % 0x8000;
@@ -76,7 +76,7 @@ const powMod = (base, exponent, mod, res = 1) => {
     return res;
 }
 
-for (let r7 = 1; r7 < 0x8000; r7++) if (F3(F3(r7, r7), r7) == 6) {
+for (let r7 = 1; r7 < 0x8000; r7++) if (f(f(r7, r7), r7) == 6) {
     console.log('R7', r7);
     break;
 }

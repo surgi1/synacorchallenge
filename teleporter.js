@@ -61,7 +61,7 @@ const main = () => {
 */
 
 // after numerous hours spent on analyzing this !@&^%@, attempts on rewrites and partial tests and more rewrites.. and more &*@#%&^% ..
-// I produced an ugly long-hours running simulation, that the result at the end..
+// I produced an ugly long-hours running simulation, that got to the result at the end..
 // later, after reading some theory: https://en.wikipedia.org/wiki/Ackermann_function and more
 // there is a much more elegant implementation available:
 

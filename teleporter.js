@@ -27,14 +27,35 @@
 /*
 // one of the middle steps
 let r0 = 4, r1 = 1, r7 = 1;
+let cache = {};
 const main = (a, b) => {
     if (a == 0) return (b+1) & 0x7FFF;
-    if (b == 0) return main( (a-1) & 0x7FFF, r7 );
-    return main((a-1) & 0x7FFF, main(a, (b-1) & 0x7FFF));
-}
-main(r0, r1);
-*/
+    let res, res2, k;
+    if (b == 0) {
+        k = ((a-1) & 0x7FFF) +'_'+ r7;
+        if (cache[k] != undefined) res = cache[k]; else {
+            res = main( (a-1) & 0x7FFF, r7 );
+            cache[k] = res;
+        }
+        return res;
+    }
 
+    k = a +'_'+ ((b-1) & 0x7FFF);
+    if (cache[k] != undefined) res = cache[k]; else {
+        res = main(a, (b-1) & 0x7FFF);
+        cache[k] = res;
+    }
+
+    k = ((a-1) & 0x7FFF) + '_'+ res;
+    if (cache[k] != undefined) res2 = cache[k]; else {
+        res2 = main((a-1) & 0x7FFF, res);
+        cache[k] = res2;
+    }
+
+    return res2;
+}
+console.log(main(r0, r1));
+*/
 /*
 // raw conversion - call stack exceeded superfast
 let r0 = 4, r1 = 1, r7 = 123, stack = [];

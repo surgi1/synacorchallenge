@@ -26,13 +26,12 @@
 
 /*
 // one of the middle steps
-let r0 = 4, r1 = 1, r7 = 123
+let r0 = 4, r1 = 1, r7 = 1;
 const main = (a, b) => {
-    if (a == 0) return (b+1) % 0x8000;
-    if (b == 0) return main( (a-1) % 0x8000, r7 );
-    return main((a - 1) % 0x8000, main(a, (b - 1) % 0x8000));
+    if (a == 0) return (b+1) & 0x7FFF;
+    if (b == 0) return main( (a-1) & 0x7FFF, r7 );
+    return main((a-1) & 0x7FFF, main(a, (b-1) & 0x7FFF));
 }
-
 main(r0, r1);
 */
 
@@ -62,7 +61,9 @@ const main = () => {
 */
 
 // after numerous hours spent on analyzing this !@&^%@, attempts on rewrites and partial tests and more rewrites.. and more &*@#%&^% ..
-// also, see https://en.wikipedia.org/wiki/Ackermann_function
+// I produced an ugly long-hours running simulation, that the result at the end..
+// later, after reading some theory: https://en.wikipedia.org/wiki/Ackermann_function and more
+// there is a much more elegant implementation available:
 
 const loop = (n, r7) => {
     let a = powMod(r7+1, n, 0x8000),
@@ -75,7 +76,7 @@ const powMod = (base, exponent, mod, res = 1) => {
     return res;
 }
 
-for (let r7 = 1; r7 < 0x8000; r7++) if (loop(loop(r7, r7), r7) == 6) {
+for (let r7 = 1; r7 < 0x8000; r7++) if (F3(F3(r7, r7), r7) == 6) {
     console.log('R7', r7);
     break;
 }

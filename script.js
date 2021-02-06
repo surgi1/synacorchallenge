@@ -41,23 +41,23 @@ const load = () => {
 }
 
 const hackTP = () => {
-    comp.memory[6027] = 18;
-    comp.memory[5451] = 21;
-    comp.memory[5452] = 21;
-    comp.memory[5453] = 21;
+    comp.mem[6027] = 18;
+    comp.mem[5451] = 21;
+    comp.mem[5452] = 21;
+    comp.mem[5453] = 21;
 
-    comp.memory[5491] = 21;
-    comp.memory[5492] = 21;
-    comp.memory[5493] = 21;
-    comp.memory[5494] = 21;
+    comp.mem[5491] = 21;
+    comp.mem[5492] = 21;
+    comp.mem[5493] = 21;
+    comp.mem[5494] = 21;
     comp.registers[7] = 25734; // see teleporter.js
     tick('use teleporter');
 }
 
 // see beach.js
 const solveBeach = () => {
-    let solution = ["take orb", "north", "east", "east", "north", "west", "south", "east", "east", "west", "north", "north", "east"];
-    solution.map(c => command(c));
+    let solution = ["take orb", "north", "east", "east", "north", "west", "south", "east", "east", "west", "north", "north", "east", "vault"];
+    [...Array(9).fill("north"), ...solution].map(c => command(c));
 }
 
 const solveRuins = () => {

@@ -17,10 +17,6 @@ class Computer {
     }
 
     translate() {
-        const prefix = (s, n, ch = ' ') => {
-            while ((s+'').length < n) s = ch+s;
-            return s;
-        }
         let ptr = 0, lines = [];
         while (ptr < this.mem.length) {
             let code = this.mem[ptr], line = {lineNr: ptr, i: this.iCode2Name[code] || 'data', params: []}, len = this.instructions[line.i]?.replace(/[0-9]/g, '').length+1;
@@ -28,14 +24,14 @@ class Computer {
             if (line.i == 'data') len = 2;
             for (let i = 1; i < len; i++) {
                 let n = parseInt(this.mem[ptr+i]);
-                if (n > 32767) n = 'R'+(n-32768); else if (line.i != 'out') n = prefix(n.toString(16), 4, '0');
+                if (n > 32767) n = 'R'+(n-32768); else if (line.i != 'out') n = n.toString(16).padStart(4, '0');
                 if ((['out'].includes(line.i)) && (n+'').indexOf('R') == -1 && n < 123 && n > 31) n = String.fromCharCode(n);
                 line.params.push(n);
             }
             if ((line.i == 'out' && lines[lines.length-1].i == 'out') || (line.i == 'data' && lines[lines.length-1].i == 'data')) lines[lines.length-1].params.push(...line.params); else lines.push(line);
             ptr += len;
         }
-        return lines.reduce((s, l) => s += prefix(l.lineNr.toString(16), 4, '0')+': '+ prefix(l.i, 4)+ ' ' + (l.i == 'out' ? '"'+l.params.join('')+'"' : l.params.join(' ') ) + "\n", '')
+        return lines.reduce((s, l) => s += l.lineNr.toString(16).padStart(4, '0')+': '+ l.i.padStart(4)+ ' ' + (l.i == 'out' ? '"'+l.params.join('')+'"' : l.params.join(' ') ) + "\n", '')
     }
 
     run(inputs = [], debug = false) {

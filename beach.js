@@ -1,5 +1,3 @@
-let start = {x: 0, y: 3}, end = {x: 3, y: 0};
-
 const map = [
 ['*', 8, '-', 1],
 [4, '*', 11, '*'],
@@ -9,36 +7,29 @@ const map = [
 const directions = [{x: 0, y: -1, v: 'north'}, {x: 0, y: 1, v: 'south'},
                     {x: -1, y: 0, v: 'west'},  {x: 1, y: 0, v: 'east'}];
 
-const updatePathValue = (path, val) => {
-    switch (path.op) {
-        case '+': return path.val + val;
-        case '-': return path.val - val;
-        case '*': return path.val * val;
-    }
-}
+let start = {x:0, y:3}, end = {x:3, y:0}, maxSteps = 15, i = 0,
+    paths = [{x: start.x, y: start.y, val: 0, op: '+', steps: []}];
 
-let paths = [{pos: $.extend(true, {}, start), val: 0, op: '+', steps: []}], minSteps = 15;
+while (paths[i]) {
+    let p = paths[i++], val = map[p.y][p.x];
 
-for (let i = 0; i < paths.length; i++) {
-    let path = paths[i], val = map[path.pos.y][path.pos.x];
+    if (isNaN(val)) p.op = val;
+    else if (p.op == '+') p.val += val;
+    else if (p.op == '-') p.val -= val;
+    else if (p.op == '*') p.val *= val;
 
-    if (path.pos.x == start.x && path.pos.y == start.y && path.steps.length > 0) path.done = true;
-    if (['+','*','-'].includes(val)) path.op = val; else path.val = updatePathValue(path, val);
-    if (path.val < -23 || path.val > 120) path.done = true;
-
-    if (path.pos.x == end.x && path.pos.y == end.y) {
-        path.done = true;
-        if (path.val == 30 && path.steps.length < minSteps) {
-            console.log('shortest trip found', path.steps, path);
-            minSteps = path.steps.length;
+    if (p.val < -20 || p.val > 120) p.done = true;
+    if (p.x == start.x && p.y == start.y && p.steps[0]) p.done = true;
+    if (p.x == end.x && p.y == end.y) {
+        p.done = true;
+        if (p.val == 30 && p.steps.length < maxSteps) {
+            console.log('shortest trip found', p.steps, p);
+            maxSteps = p.steps.length;
         }
     }
 
-    if (!path.done) directions.map(dir => {
-        let p = $.extend(true, {}, path);
-        p.pos.x += dir.x;
-        p.pos.y += dir.y;
-        p.steps.push(dir.v);
-        if (p.pos.x >= 0 && p.pos.x < 4 && p.pos.y >= 0 && p.pos.y < 4 && p.steps.length < minSteps) paths.push(p);
+    if (!p.done) directions.map(d => {
+        let np = {x: p.x+d.x, y: p.y+d.y, val: p.val, op: p.op, steps: [...p.steps, d.v]}
+        if (map[np.y] && map[np.y][np.x] && np.steps.length < maxSteps) paths.push(np);
     })
 }

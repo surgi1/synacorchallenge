@@ -20,7 +20,7 @@ JavaScript Implementation, browser+node
 
 ### Twisty little mazes, all alike
 
-- Built UI for playing the text game.
+- Built UI for playing the text game. Deployed [here](https://github.com/surgi1/synacorchallenge/index.html).
 - Solved the Grue-heavy part manually by moving through the dungeon, realizing that it occupies some non-Euclidean space (`A -> south -> B -> north -> !A`).
 
 ### Ruins

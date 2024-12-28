@@ -2,6 +2,8 @@
 
 https://challenge.synacor.com/
 
+EDIT: So there's two news. The bad news is, that the original website no longer works! The good news is, that there is this repo: https://github.com/Aneurysm9/vm_challenge hosting not only one of the versions of the binary file, but also providing MD5 checksums of the codes. So, you can still the the challenge, enjoy!
+
 JavaScript Implementation, browser+node
 
 ## The fun is real, take the challenge!
